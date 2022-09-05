@@ -47,9 +47,9 @@ It returns the following:
 }
 ```
 
-#### GET `/verfiy/:token`
+#### GET `/verify/:token`
 
-You can do a GET to `/verfiy/:token` to confirm your registration.
+You can do a GET to `/verify/:token` to confirm your registration.
 
 It returns the following:
 
