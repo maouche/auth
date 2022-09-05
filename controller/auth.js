@@ -19,7 +19,7 @@ const register = async (req, res) => {
                         { email: req.body.email, password: req.body.password, role: "user", confirmation_token: token },
                         async () => {
                             sendMailConfirmation(token, req.body.email, () => {
-                                res.status(200).json({message: "Your registration is done successfully."});
+                                res.status(200).json({message: "Your registration is done successfully, please confirm your registration with the email we sent."});
                             });
                         }
                     );
@@ -87,10 +87,10 @@ const login = (req, res) => {
                         } else {
                             const confirmationToken = jwt.sign( { data: req.body.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "10m" } );
                             User.updateConfirmationToken({id: user.id, confirmationToken, confirmed: null }, () => {
-                                sendMailConfirmation(confirmationToken, user.email, () => {
-                                    res.status(200).json({message: "Your registration is done successfully."});
+                                sendMailConfirmation(confirmationToken, user.email, (result, error) => {
+                                    if (error) throw error;
+                                    return res.status(401).json({message: "User not confirmed, Please confirm your registration with the email we sent you."});
                                 });
-                                return res.status(401).json({ message: "User not confirmed, Please confirm your subscription with email."})
                             })
                         }
                     }
