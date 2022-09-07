@@ -1,11 +1,10 @@
 const sqlite3 = require("sqlite3")
-const dbname = "main.db"
 
-let client = new sqlite3.Database(dbname, (error) => {
+let client = new sqlite3.Database(process.env.DB_NAME, (error) => {
 	if (error)
 		throw error
 
-	console.log("Database started on " + dbname)
+	console.log("Database started on " + process.env.DB_NAME)
 })
 
 client.run(`CREATE TABLE IF NOT EXISTS users (
