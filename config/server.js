@@ -13,18 +13,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use("/assets", express.static("public"));
-
-// CORS
-if ( process.env.ENV === "dev") {
-    app.use(cors());
-} else {
-    app.use(
-        cors({
-            credentials: true,
-            origin: process.env.URL_UI,
-        })
-    );
-}
+app.use(cors());
 
 app.listen(process.env.PORT, () =>
     console.log("listing to port " + process.env.PORT)

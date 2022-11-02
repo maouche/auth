@@ -5,6 +5,7 @@ const { client } = require("../config/database");
 const { sendMailConfirmation } = require("../config/mailer");
 
 const register = async (req, res) => {
+    return res.status(404).json({message: "Registration is not available at the moment."});
     try {
         client.get(
             "SELECT * FROM users WHERE email=?",
